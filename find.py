@@ -18,7 +18,8 @@ def loadData(fileName):
         with open(fileName, "r") as file:
             data = json.load(file)  # Load existing data
     except (FileNotFoundError, json.JSONDecodeError):# catch empty file
-        data = []  
+        data = [] 
+    return data
 
 #saves json objects to file
 def saveData(data, fileName):
@@ -44,16 +45,27 @@ def add(food, day, data):
     data.append(x)  # Append new entry
     
 
+def populateMap(data):
+    map = {}
+    for entry in data:
+        print("here", entry['name'])
+        map.setdefault(entry['name'], []).append(entry['date'])
+    return map
+
 
  
 fileName = "c.json"
 
-try: #try to read
-    with open(fileName, "r") as file:
-        data = json.load(file)  # Load existing data
-except (FileNotFoundError, json.JSONDecodeError):# catch empty file
-    data = []
+# try: #try to read
+#     with open(fileName, "r") as file:
+#         data = json.load(file)  # Load existing data
+# except (FileNotFoundError, json.JSONDecodeError):# catch empty file
+#     data = []
 
-delete(data, 531059441710585)
+# delete(data, 531059441710585)
 
 # getData("c.json")
+
+data = loadData(fileName)
+map = populateMap(data)
+print(map)
